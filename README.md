@@ -5,14 +5,14 @@ Custom PHP MVC framework by Titan Systems.
 
 ## Requirements
 
-- PHP 7.2–8.x (legacy dependency pins; use `--ignore-platform-reqs` on PHP 8+)
+- PHP 7.2–8.x (legacy dependency pins; composer.json pins platform PHP to 7.4 for resolution)
 - MySQL/MariaDB
 - Composer
 
 ## Setup
 
 ```bash
-composer install --ignore-platform-reqs
+composer install
 ```
 
 1. Import `install.sql` into your database.

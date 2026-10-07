@@ -54,6 +54,10 @@
             "advisories": {
                 "block": false
             }
+        },
+        "platform": {
+            "ext-zip": "1.2.0",
+            "php": "7.4.33"
         }
     }
 }
