@@ -9,3 +9,6 @@
 /system/storage/smarty/compiled/*
 /system/storage/temporary/*
 !**/.gitkeep
+
+# Local environment config (contains credentials)
+system/configurations/cc_env.inc
