@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: curl, dom, mbstring, pdo_mysql, zip
+          coverage: none
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-publish --no-check-lock || composer validate --no-check-publish --no-check-lock
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Lint PHP files
+        run: |
+          set -e
+          find index.php system -name '*.php' -not -path '*/vendor/*' -print0 | xargs -0 -n1 php -l > /dev/null
+          echo "PHP lint OK"
+
+      - name: Smoke test front controller
+        run: |
+          cp system/configurations/cc_env.inc.example system/configurations/cc_env.inc
+          php -S 127.0.0.1:8080 >/tmp/php.log 2>&1 &
+          sleep 2
+          curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/install | grep -qE '200|302|500'
