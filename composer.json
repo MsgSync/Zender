@@ -48,5 +48,12 @@
         "thamaraiselvam/mysql-import": "dev-master",
         "verot/class.upload.php": "2.0.9",
         "volnix/csrf": "1.2.1"
+    },
+    "config": {
+        "policy": {
+            "advisories": {
+                "block": false
+            }
+        }
     }
 }
