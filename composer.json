@@ -1,6 +1,7 @@
 {
     "name": "zender/zender",
     "description": "Zender - Android Mobile Devices as SMS Gateway (SaaS Platform)",
+    "license": "proprietary",
     "type": "project",
     "require": {
         "box/spout": "3.1.0",
