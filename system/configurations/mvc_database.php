@@ -2,7 +2,7 @@
 /**
  * Framework Database
  * @package MVC Framework
- * @author Titan Systems <mail@titansystems.ph>
+ * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
 define("database", [

@@ -1,7 +1,7 @@
 <?php
 /**
  * MVC Framework
- * @author Titan Systems <mail@titansystems.ph>
+ * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
 /**
@@ -52,7 +52,7 @@ $init->run();
 /**
  * Framework Class
  * @package	MVC Framewok
- * @author Titan Systems <mail@titansystems.ph>
+ * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
 class MVC

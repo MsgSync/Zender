@@ -3,14 +3,14 @@
  * Name: MVC Framework
  * About: KhulnaSoft MVC Framework
  * Copyright: 2020, All Rights Reserved.
- * Author: Titan Systems <mail@titansystems.ph>
+ * Author: KhulnaSoft <mail@khulnasoft.com>
  */
 
 /**
  * MVC_ExceptionHandler
  * A simple exception handler to display exceptions in a formatted box
  * @package MVC
- * @author Titan Systems
+ * @author KhulnaSoft
  */
 
 class MVC_ExceptionHandler extends ErrorException

@@ -3,13 +3,13 @@
  * Name: MVC Framework
  * About: KhulnaSoft MVC Framework
  * Copyright: 2020, All Rights Reserved.
- * Author: Titan Systems <mail@titansystems.ph>
+ * Author: KhulnaSoft <mail@khulnasoft.com>
  */
 
 /**
  * MVC_Model
  * @package MVC
- * @author Titan Systems <mail@titansystems.ph>
+ * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
 class MVC_Model

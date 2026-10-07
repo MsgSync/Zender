@@ -2,7 +2,7 @@
 /**
  * Framework Application Config
  * @package MVC Framework
- * @author Titan Systems <mail@titansystems.ph>
+ * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
 ini_set("display_errors", 1);

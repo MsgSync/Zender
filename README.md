@@ -1,7 +1,7 @@
 # Zender
 
 Zender — Android Mobile Devices as SMS Gateway (SaaS Platform).
-Custom PHP MVC framework by Titan Systems.
+Custom PHP MVC framework by KhulnaSoft.
 
 ## Requirements
 

@@ -2,7 +2,7 @@
 /**
  * Framework System Config
  * @package MVC Framework
- * @author Titan Systems <mail@titansystems.ph>
+ * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
 date_default_timezone_set("UTC");
@@ -14,6 +14,6 @@ define("error_handler", 1);
  */
 
 define("site_url", "//" . env["siteurl"] . env["port"] . env["subdir"]);
-define("titansys_api", "https://api.titansystems.xyz");
-define("titansys_builder", "https://builder.titansystems.xyz");
+define("titansys_api", "https://api.khulnasoft.com");
+define("titansys_builder", "https://builder.khulnasoft.com");
 define("system_token", env["systoken"]);
