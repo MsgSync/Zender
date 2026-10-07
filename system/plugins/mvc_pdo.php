@@ -1,7 +1,7 @@
 <?php
 /**
  * Name: MVC Framework
- * About: Titan Systems MVC Framework
+ * About: KhulnaSoft MVC Framework
  * Copyright: 2020, All Rights Reserved.
  * Author: Titan Systems <mail@titansystems.ph>
  */
