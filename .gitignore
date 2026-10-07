@@ -1,1 +1,11 @@
 .DS_Store
+
+# Dependencies & generated
+/vendor/
+/uploads/*
+!/uploads/.gitkeep
+/system/storage/cache/*
+/system/storage/smarty/cache/*
+/system/storage/smarty/compiled/*
+/system/storage/temporary/*
+!**/.gitkeep
