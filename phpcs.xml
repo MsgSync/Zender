@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ruleset name="Zender">
+    <description>Coding standard for new Zender code (tests, tooling, entry point).</description>
+
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg value="sp"/>
+
+    <file>index.php</file>
+    <file>tests</file>
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/system/storage/*</exclude-pattern>
+    <exclude-pattern>*/templates/*</exclude-pattern>
+
+    <rule ref="PSR12">
+        <!-- The application and its test harness use global classes by design
+             (custom include-path autoloader, no PSR-4). -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+        <!-- Bootstrap/config files intentionally mix declarations and side effects. -->
+        <exclude name="PSR1.Files.SideEffects"/>
+    </rule>
+</ruleset>

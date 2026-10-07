@@ -1,0 +1,19 @@
+{
+    "name": "zender",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Zender front-end build (SCSS to theme CSS)",
+    "scripts": {
+        "build": "grunt",
+        "watch": "grunt watch",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
+    },
+    "devDependencies": {
+        "eslint": "^9.39.5",
+        "globals": "^17.13.0",
+        "grunt": "^1.6.3",
+        "grunt-contrib-watch": "^1.1.0",
+        "sass": "^1.105.1"
+    }
+}

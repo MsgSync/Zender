@@ -86,17 +86,46 @@ Available tags: `latest` (default branch), `sha-<commit>`, and release tags (e.g
 
 > Change the default MySQL credentials and `systoken` before deploying to production.
 
+## Development
+
+A Docker-based development environment mirrors the production stack and adds
+source mounts, Xdebug, database auto-seeding and the test toolchain:
+
+```bash
+make dev      # app + MySQL at http://localhost:8080 (auto-seeded)
+make test     # PHPUnit (unit + integration) inside the app container
+make lint     # PHP syntax lint + ESLint
+make build    # compile theme SCSS
+make help     # all targets
+```
+
+First boot creates two databases — `zender` (app) and `zender_test`
+(PHPUnit) — both seeded from `install.sql` with a dev admin login
+(`admin@zender.test` / `password`). See [CONTRIBUTING.md](CONTRIBUTING.md)
+for the full workflow, coding standards and debugging setup.
+
+Quality tooling: `composer test` (PHPUnit), `composer phpcs` (PSR-12 for new
+code), `npm run build` / `npm run watch` (SCSS), all wired into
+`.github/workflows/ci.yml`.
+
 ## Structure
 
 ```
-index.php            Front controller
-install.sql          Database schema
-system/              MVC framework, controllers, models, plugins, config
-templates/           Smarty templates and assets
-uploads/             User-uploaded content (gitignored)
-system/storage/      Cache/compiled/temporary files (gitignored)
-vendor/              Composer dependencies (gitignored)
-docs/       HTML documentation
+index.php                Front controller
+install.sql              Database schema + seed data
+system/                  MVC framework, controllers, models, plugins, config
+templates/               Smarty templates and assets
+uploads/                 User-uploaded content (gitignored)
+system/storage/          Cache/compiled/temporary files (gitignored)
+vendor/                  Composer dependencies (gitignored)
+tests/                   PHPUnit bootstrap, unit + integration suites
+tools/                   Setup, database seeding and dev Docker helpers
+Dockerfile               Production image
+Dockerfile.dev           Development image (Xdebug, dev dependencies)
+docker-compose.yml       Production stack
+docker-compose.dev.yml   Development overrides (mounts, seeding, mailpit)
+Makefile                 Development shortcuts (make help)
+docs/                    HTML documentation
 ```
 
 ## Notes

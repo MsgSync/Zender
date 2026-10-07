@@ -1,0 +1,30 @@
+FROM php:8.4-apache
+
+RUN apt-get update && apt-get install -y --no-install-recommends libzip-dev git unzip \
+    && docker-php-ext-install pdo_mysql zip \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN { \
+        echo 'xdebug.client_host=host.docker.internal'; \
+        echo 'xdebug.client_port=9003'; \
+        echo 'xdebug.start_with_request=trigger'; \
+        echo 'xdebug.connect_timeout=3'; \
+        echo 'xdebug.log_level=0'; \
+    } > /usr/local/etc/php/conf.d/xdebug-settings.ini
+
+# Xdebug stays off unless XDEBUG_MODE=debug is set (compose sets it in dev)
+ENV XDEBUG_MODE=off \
+    COMPOSER_ALLOW_SUPERUSER=1
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+COPY . .
+
+RUN chown -R www-data:www-data uploads system/storage
+
+EXPOSE 80

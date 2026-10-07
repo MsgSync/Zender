@@ -1,0 +1,7 @@
+dbhost<=>127.0.0.1
+dbport<=>3306
+dbname<=>zender_test
+dbuser<=>root
+dbpass<=>root
+systoken<=>test-token
+installed<=>1

@@ -6,7 +6,8 @@ on:
   pull_request:
 
 jobs:
-  ci:
+  php:
+    name: Lint, coding standard, unit tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,11 +29,14 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Lint PHP files
-        run: |
-          set -e
-          find index.php system -name '*.php' -not -path '*/vendor/*' -print0 | xargs -0 -n1 php -l > /dev/null
-          echo "PHP lint OK"
+      - name: PHP syntax lint
+        run: composer lint
+
+      - name: Coding standard (phpcs)
+        run: composer phpcs
+
+      - name: Unit tests
+        run: composer test:unit
 
       - name: Smoke test front controller
         run: |
@@ -40,3 +44,71 @@ jobs:
           php -S 127.0.0.1:8080 >/tmp/php.log 2>&1 &
           sleep 2
           curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/install | grep -qE '200|302|500'
+
+  integration:
+    name: Integration tests (MySQL)
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: zender_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    env:
+      ZENDER_TEST_DB_HOST: 127.0.0.1
+      ZENDER_TEST_DB_PORT: "3306"
+      ZENDER_TEST_DB_NAME: zender_test
+      ZENDER_TEST_DB_USER: root
+      ZENDER_TEST_DB_PASS: root
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: curl, dom, mbstring, pdo_mysql, zip
+          coverage: none
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Seed test database
+        run: |
+          command -v mysql >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y mysql-client)
+          mysql -h127.0.0.1 -uroot -proot zender_test < install.sql
+          mysql -h127.0.0.1 -uroot -proot zender_test < tools/dev-admin.sql
+
+      - name: Run test suite
+        run: composer test
+
+  frontend:
+    name: Frontend lint and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Build theme CSS
+        run: npm run build

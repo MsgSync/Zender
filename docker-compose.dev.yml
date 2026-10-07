@@ -1,0 +1,54 @@
+# Development overrides - used together with docker-compose.yml:
+#
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+#
+# or simply `make dev`. Production usage (plain `docker compose up`) is
+# unaffected by this file.
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile.dev
+    command: ["sh", "tools/docker/dev-entry.sh"]
+    environment:
+      XDEBUG_MODE: ${XDEBUG_MODE:-debug}
+      ZENDER_CC_ENV: /tmp/zender-cc_env.inc
+      ZENDER_TEST_DB_HOST: db
+      ZENDER_TEST_DB_PORT: "3306"
+      ZENDER_TEST_DB_NAME: zender_test
+      ZENDER_TEST_DB_USER: root
+      ZENDER_TEST_DB_PASS: root
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: zender
+      DB_USER: root
+      DB_PASS: root
+    volumes:
+      - .:/var/www/html
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  db:
+    volumes:
+      # Seeds `zender` (MYSQL_DATABASE) on first boot
+      - ./install.sql:/docker-entrypoint-initdb.d/10-zender.sql:ro
+      # Seeds the isolated `zender_test` database used by PHPUnit
+      - ./tools/docker/initdb/20-zender-test-db.sh:/docker-entrypoint-initdb.d/20-zender-test-db.sh:ro
+      # Dev admin user for `zender` (applied to zender_test by the script above)
+      - ./tools/dev-admin.sql:/docker-entrypoint-initdb.d/30-dev-admin.sql:ro
+
+  # Frontend tooling (npm) - opt-in: docker compose ... --profile tools up
+  node:
+    image: node:24
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    profiles: ["tools"]
+
+  # Local SMTP catcher - UI at http://localhost:8025
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    profiles: ["tools"]

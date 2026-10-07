@@ -44,10 +44,14 @@ require "mvc_system.php";
 
 /** 
  * Initialize
+ * Define MVC_NO_DISPATCH to load the framework without serving a request
+ * (used by the test harness in tests/bootstrap.php).
  */
 
-$init = new MVC;
-$init->run();
+if (!defined("MVC_NO_DISPATCH")):
+    $init = new MVC;
+    $init->run();
+endif;
 
 /**
  * Framework Class

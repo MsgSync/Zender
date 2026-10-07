@@ -5,10 +5,12 @@
 
 function get_configs()
 {
-    if(!file_exists("system/configurations/cc_env.inc"))
+    $config_file = (getenv("ZENDER_CC_ENV") ?: "system/configurations/cc_env.inc");
+
+    if(!file_exists($config_file))
         die("Environment config not found!");
 
-    $configs = explode("\n", file_get_contents("system/configurations/cc_env.inc"));
+    $configs = explode("\n", file_get_contents($config_file));
     foreach($configs AS $config):
         $line = explode("<=>", $config);
         $vals[$line[0]] = (isset($line[1]) ? $line[1] : false);

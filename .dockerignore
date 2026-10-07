@@ -5,4 +5,17 @@ Documentation
 *.md
 .dockerignore
 Dockerfile
+Dockerfile.dev
 docker-compose.yml
+docker-compose.dev.yml
+Makefile
+node_modules
+vendor
+.phpunit.result.cache
+.phpunit.cache
+phpunit.xml
+
+# Never bake credentials into the image
+system/configurations/cc_env.inc
+tests/config/cc_env.inc
+populate.sql
