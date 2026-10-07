@@ -12,6 +12,7 @@
  * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
+#[\AllowDynamicProperties]
 class MVC_Model
 {
     /**

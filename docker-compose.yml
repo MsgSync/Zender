@@ -2,16 +2,20 @@ services:
   app:
     build: .
     ports:
-      - "8080:80"
+      - "${HTTP_PORT:-8080}:80"
     volumes:
       - ./uploads:/var/www/html/uploads
       - ./system/storage:/var/www/html/system/storage
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: zender
-    ports:
-      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20

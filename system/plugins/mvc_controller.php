@@ -13,6 +13,7 @@
  * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
+#[\AllowDynamicProperties]
 class MVC_Controller
 {
 

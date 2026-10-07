@@ -14,7 +14,7 @@
         "giggsey/libphonenumber-for-php": "8.12.6",
         "giggsey/locale": "1.8",
         "guzzlehttp/guzzle": "^6.5.8",
-        "guzzlehttp/promises": "1.3.1",
+        "guzzlehttp/promises": "^1.5",
         "guzzlehttp/psr7": "^1.9.1",
         "hashids/hashids": "2.0.4",
         "league/omnipay": "3.0.2",

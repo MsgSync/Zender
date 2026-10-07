@@ -55,6 +55,7 @@ $init->run();
  * @author KhulnaSoft <mail@khulnasoft.com>
  */
 
+#[\AllowDynamicProperties]
 class MVC
 {
     public $config = configuration;
