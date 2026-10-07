@@ -30,7 +30,7 @@ templates/           Smarty templates and assets
 uploads/             User-uploaded content (gitignored)
 system/storage/      Cache/compiled/temporary files (gitignored)
 vendor/              Composer dependencies (gitignored)
-Documentation/       HTML documentation
+docs/       HTML documentation
 ```
 
 ## Notes
